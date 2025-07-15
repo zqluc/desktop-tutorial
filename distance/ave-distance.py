@@ -575,7 +575,7 @@ for i in range(0,1):
         epsilon2 = 0.7 * epsilon
         #  PrivBayes
         score_sum = 0
-        for _ in range(3):
+        for _ in range(50):
            # **********************************************
             start_new = time.time()
             random_node = firstnode.random_firstnode(df)
@@ -588,12 +588,12 @@ for i in range(0,1):
             end_new = time.time()
             cost_new = end_new - start_new
             print(datasets_name[i], target, epsilon, "dt:", score_sum, 'cost time :', cost_new)
-        score_PrivBayes_list.append(score_sum / 3)
+        score_PrivBayes_list.append(score_sum / 50)
         # ***********************************************
         # ELPrivBayes
         score_sum = 0
         our_node = firstnode.get_ours_first_node(MIM, df)
-        for _ in range(3):
+        for _ in range(50):
             start_new = time.time()
             # ***********************************************
 
@@ -606,12 +606,12 @@ for i in range(0,1):
             end_new = time.time()
             cost_new = end_new - start_new
             print(datasets_name[i], target, epsilon, "dt:", score_sum, 'cost time :', cost_new)
-        score_EL_PrivBayes_list.append(score_sum / 3)
+        score_EL_PrivBayes_list.append(score_sum / 50)
         # ***********************************************
         # SA-PrivBayes
         score_sum = 0
         our_node = firstnode.get_ours_first_node(MIM, df)
-        for _ in range(3):
+        for _ in range(50):
             start_new = time.time()
             # ***********************************************
 
@@ -624,7 +624,7 @@ for i in range(0,1):
             end_new = time.time()
             cost_new = end_new - start_new
             print(datasets_name[i], target, epsilon, "dt:", score_sum, 'cost time :', cost_new)
-        score_SA_PrivBayes_list.append(score_sum / 3)
+        score_SA_PrivBayes_list.append(score_sum / 50)
     expriment_table['SA-PrivBayes'] = score_SA_PrivBayes_list
     expriment_table['ELPrivBayes'] = score_EL_PrivBayes_list
     expriment_table['PrivBayes'] = score_PrivBayes_list

@@ -537,7 +537,7 @@ for i in range(0, 1):
             # PrivBayes
             score_sum = 0
             random_node = firstnode.random_firstnode(df_train)
-            for _ in range(3):
+            for _ in range(50):
                 N, score =PrivBayes.PrivBayes_PDconstruct_Bayes(df_train, k=k, first_node=random_node, matrix=MIM,
                                                            epsilon=epsilon1, sensitivity=sensitivity)
 
@@ -546,11 +546,11 @@ for i in range(0, 1):
                 accuracy = get_svm_ac(df_new, df_test, target)
                 score_sum += accuracy
                 print(datasets_name[i], target, epsilon, "ac:", accuracy)
-            score_PrivBayes_list.append(score_sum / 3)
+            score_PrivBayes_list.append(score_sum / 50)
             #     ElPrivBayes
             score_sum = 0
             our_node = firstnode.get_ours_first_node(matrix=MIM, df=df_train)
-            for _ in range(3):
+            for _ in range(50):
                 N, score = PrivBayes_PDconstruct_Bayes(df_train, k, our_node, MIM,
                                                                       epsilon1, sensitivity)
                 P = PrivBayes.NoisyConditionals(N, df_train, k, epsilon2)
@@ -559,7 +559,7 @@ for i in range(0, 1):
                 score_sum += accuracy
                 print(datasets_name[i], target, epsilon, "ac:", accuracy)
 
-            score_ELPrivBayes_list.append(score_sum / 3)
+            score_ELPrivBayes_list.append(score_sum / 50)
             # SA-PrivBayes,q=1.2
             score_sum = 0
             our_node = firstnode.get_ours_first_node(matrix=MIM, df=df_train)
@@ -572,7 +572,7 @@ for i in range(0, 1):
                 score_sum += accuracy
                 print(datasets_name[i], target, epsilon, "ac:", accuracy)
 
-            score_SAPrivBayes_2_list.append(score_sum / 3)
+            score_SAPrivBayes_2_list.append(score_sum / 50)
             # SA-PrivBayes,q=1.1
             score_sum = 0
             our_node = firstnode.get_ours_first_node(matrix=MIM, df=df_train)
@@ -585,11 +585,11 @@ for i in range(0, 1):
                 score_sum += accuracy
                 print(datasets_name[i], target, epsilon, "ac:", accuracy)
 
-            score_SAPrivBayes_1_list.append(score_sum /3)
+            score_SAPrivBayes_1_list.append(score_sum /50)
             # SA-PrivBayes,q=1.0
             score_sum = 0
             our_node = firstnode.get_ours_first_node(matrix=MIM, df=df_train)
-            for _ in range(3):
+            for _ in range(50):
                 N, score, score_all = PrivBayes_PDconstruct_Bayes_new1(df_train, k, our_node, MIM,
                                                                        epsilon1, sensitivity)
                 P = PrivBayes.NoisyConditionals(N, df_train, k, epsilon2)
@@ -598,7 +598,7 @@ for i in range(0, 1):
                 score_sum += accuracy
                 print(datasets_name[i], target, epsilon, "ac:", accuracy)
 
-            score_SAPrivBayes_0_list.append(score_sum / 3)
+            score_SAPrivBayes_0_list.append(score_sum / 50)
         experiment_table['PrivBayes'] = score_PrivBayes_list
         experiment_table['ELPrivBayes'] = score_ELPrivBayes_list
         experiment_table['SAPrivBayes,q=1.2'] = score_SAPrivBayes_2_list

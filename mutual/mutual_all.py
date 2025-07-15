@@ -642,39 +642,39 @@ for k in range(2,4):
         for epsilon in epsilon_list:
             score = 0
             node = firstnode.random_firstnode(df)
-            for _ in range(10):
+            for _ in range(50):
                 # Privbayes
                 N1,s1 =PrivBayes.PrivBayes_PDconstruct_Bayes(df,k,node,mim,epsilon,sensitivity)
                 score+=s1
-            score_privBayes.append(score/10)
+            score_privBayes.append(score/50)
             score = 0
             node = firstnode.get_ours_first_node(mim, df)
-            for _ in range(10):
+            for _ in range(50):
                 # ELPrivbayes
                 N2, s2 = PrivBayes_PDconstruct_Bayes(df, k, node, mim, epsilon, sensitivity)
                 score += s2
-            score_ELprivBayes.append(score / 10)
+            score_ELprivBayes.append(score / 50)
             score = 0
             node = firstnode.get_ours_first_node(mim, df)
-            for _ in range(10):
+            for _ in range(50):
                 # Our  2/3
                 N3, s3, score_all3 = PrivBayes_PDconstruct_Bayes_new1(df, k, node, mim, epsilon, sensitivity)
                 score += s3
-            score_our3.append(score / 10)
+            score_our3.append(score / 50)
             score = 0
             node = firstnode.get_ours_first_node(mim,df)
-            for _ in range(10):
+            for _ in range(50):
                 # Our  1/2
                 N4,s4,score_all3 = PrivBayes_PDconstruct_Bayes_new2(df,k,node,mim,epsilon,sensitivity)
                 score+=s4
-            score_our2.append(score/10)
+            score_our2.append(score/50)
             score = 0
             node = firstnode.get_ours_first_node(mim, df)
-            for _ in range(10):
+            for _ in range(50):
                 # Our  3/4
                 N5,s5,score_all4 = PrivBayes_PDconstruct_Bayes_new3(df,k,node,mim,epsilon,sensitivity)
                 score += s5
-            score_our4.append(score / 10)
+            score_our4.append(score / 50)
         result['PrivBayes'] = score_privBayes
         result['ELPrivBayes']=score_ELprivBayes
         result['Our3']=score_our3
