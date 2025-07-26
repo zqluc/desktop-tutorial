@@ -52,11 +52,11 @@ ax.plot(epsilon_list_label, score_ELPrivBayes_list, color='black',linestyle='--'
 ax.plot(epsilon_list_label, score_PrivBayes_list, color='black', linestyle=':',label='PrivBayes',
            marker='o', ms=8, linewidth=0.7, markerfacecolor='none')
 font = {'family': 'Times New Roman', 'style': 'italic',
-        'weight': 'normal'}  # 这个'italic'为斜体 'weight':'normal', 'color':'red', 'size':16 }
-ax.set_xlabel(fontdict=font, xlabel='ε', fontsize=20, verticalalignment='center', y=1.2)  #
+        'weight': 'normal'}
+ax.set_xlabel(fontdict=font, xlabel='ε', fontsize=20, verticalalignment='center', y=1.2)
 font2 = {'family': 'Times New Roman',
-         'weight': 'normal'}  # 这个'italic'为斜体 'weight':'normal', 'color':'red', 'size':16 }
-ax.set_title("({0}) {1}".format(abcd[0], datasets_name[0]), y=-0.22, fontsize=20)  # ,fontdict=font2)
+         'weight': 'normal'}
+ax.set_title("({0}) {1}".format(abcd[0], datasets_name[0]), y=-0.22, fontsize=20)
 ax.set_ylabel('Accuracy', fontsize=20)
 ax.legend(bbox_to_anchor=(1, 0), loc='lower right', fontsize=10, framealpha=0.5)
 plt.savefig(r"D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning\accuracy-{}.svg".format(

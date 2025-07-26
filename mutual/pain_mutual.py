@@ -23,7 +23,7 @@ datasets = ['NLTCS']
 # datasets = ['BR2000']
 epsilon_list_label = ['0.02','0.04','0.08','0.2','0.4','0.8','1.6','3.2','6.4']
 abcd = ['f']
-fig, ax = plt.subplots(1, 1, figsize=(6, 4), dpi=300)  # , constrained_layout=True)
+fig, ax = plt.subplots(1, 1, figsize=(6, 4), dpi=300)
 plt.rcParams['font.sans-serif'] = ['Times New Roman']
 print(ax)
 result = pd.read_csv(
@@ -46,7 +46,7 @@ ax.plot(epsilon_list_label, score_el_list, color='black', linestyle='--', label=
 ax.plot(epsilon_list_label, score_priv_list, color='black', linestyle=':', label='PrivBayes',
            marker='o', ms=8, linewidth=0.7, markerfacecolor='none')
 
-font={'family':'Times New Roman', 'style':'italic' , 'weight': 'normal'}# 这个'italic'为斜体 'weight':'normal', 'color':'red', 'size':16 }
+font={'family':'Times New Roman', 'style':'italic' , 'weight': 'normal'}
 ax.set_xlabel(fontdict=font, xlabel='ε', fontsize=20, verticalalignment='center', y=1.2)
 ax.set_title('({}) {},k=3'.format(abcd[0], datasets[0]), fontsize=20, y=-0.26)
 ax.set_ylabel('Sum of mutual information', fontsize=20)

@@ -28,7 +28,7 @@ Data_adult = pd.read_csv(path_adult)
 # Data_adult.drop('native-country', axis=1, inplace=True)
 
 
-def get_mim(df):  # 互信息矩阵
+def get_mim(df):
     MI_matirx = pd.DataFrame(index=df.columns, columns=df.columns).fillna(0)
     len1 = df.columns.size
     variables = df.columns
@@ -36,33 +36,32 @@ def get_mim(df):  # 互信息矩阵
         for j in range(i + 1, len1):
             MI_matirx.iloc[i, j] = mtr.mutual_info_score(df[variables[i]], df[variables[j]])
     MI_matirx = round(MI_matirx, 4)
-    #     print("MIC矩阵为：\n",MIC_matirx)
     MI_matirx = MI_matirx + MI_matirx.T
     return MI_matirx
 
 
-# 香农熵的计算函数
+
 def get_information_Entropy(df, column_name):
-    count = df[column_name].count()  # 总记录数
-    values = df[column_name].unique()  # 取值范围
-    column_Entropy = 0  # 信息熵
+    count = df[column_name].count()
+    values = df[column_name].unique()
+    column_Entropy = 0
     Pr = {}
     for i in range(0, values.size):
         Pr[values[i]] = (df[column_name][df[column_name] == values[i]].count()) / count
-        column_Entropy += -(Pr[values[i]] * np.log(Pr[values[i]]))  # 信息熵公式
+        column_Entropy += -(Pr[values[i]] * np.log(Pr[values[i]]))
     return column_Entropy
     Pr.clear()
 
 
 def get_subset(V, k):
-    k = int(k)# 求子集
+    k = int(k)
     if (len(V) >= k):
-        return list(itertools.combinations(V, k))  # 返回V固定长度k的子集
+        return list(itertools.combinations(V, k))
     else:
         return [tuple(V)]
 
 
-def exponential(options, scores, epsilon, sensitivity):  # 指数机制
+def exponential(options, scores, epsilon, sensitivity):
     probabilities = [np.exp(epsilon * score / (2 * sensitivity)) for score in scores]
     if np.inf in probabilities:
         for i in range(0, len(probabilities)):
@@ -70,7 +69,7 @@ def exponential(options, scores, epsilon, sensitivity):  # 指数机制
                 probabilities[i] = 1
             else:
                 probabilities[i] = 0
-    probabilities = probabilities / np.linalg.norm(probabilities, ord=1)  # 归一化概率 # ord 一阶范式 即绝对值之和
+    probabilities = probabilities / np.linalg.norm(probabilities, ord=1)
     return np.random.choice(options, size=1, replace=False, p=probabilities)[0]
 
 
@@ -89,7 +88,7 @@ def N2bn(N):
     return Edges
 
 
-# 计算信息熵最大的节点。
+
 def get_joint_distribution(v_v):
     res = itertools.product(*v_v)
     result = list(res)
@@ -97,7 +96,7 @@ def get_joint_distribution(v_v):
 
 
 
-# 首节点选择方法
+
 class firstnode():
 
     def get_maxentropy_node(df):
@@ -115,7 +114,7 @@ class firstnode():
             if matrix.sum()[node] == max(matrix.sum()):
                 return node
 
-    # 静态权重值的方法 CSAPrivBayes
+
 
     def CSY_bayes_get_firstnode(df):
         domain_list = []
@@ -136,17 +135,16 @@ class firstnode():
 
 class PrivBayes():
     def PrivBayes_construct_Bayes(df, k, first_node, matrix):
-        N = []  # 存放网络结构
-        V = []  # 已在网络中的Attribute
+        N = []
+        V = []
         A = df.columns.values.tolist()
-        score_sum = 0.0  # 求ap对的分数之和，作为评价指标
+        score_sum = 0.0
         df_len = len(A)
-        #     X_1 = A[np.random.randint(0,len(df.columns))] # 随机选择首节点
         X_1 = first_node
         N.append((X_1, (np.nan)))
         V.append(X_1)
         A.remove(X_1)
-        for i in range(1, df_len):  # [1,df_len-1]
+        for i in range(1, df_len):
             Omega = []
             scores = []
             V_k_subset = get_subset(V, k)
@@ -157,31 +155,25 @@ class PrivBayes():
                         score_X_pai += matrix[X][matrix.index == atr].values[0]
                     scores.append(score_X_pai)  # 1
                     Omega.append((X, pai))
-            # 直接以分数最大为原则选择AP对
             i = scores.index(np.max(scores))
             score_sum += np.max(scores)
-            # 使用指数机制选择AP对,打分函数为MIC
-            #         i = exponential(options=np.arange(0,len(Omega),1), scores=scores, epsilon =epsilon, sensitivity=get_MI_sensitivity(df.shape[0],False)) # 选出下标
-            #         score_sum += scores[i]
-            X_i = Omega[i][0]  # 从A选出的节点
-            N.append(Omega[i])  # 给网络加入依赖
+            X_i = Omega[i][0]
+            N.append(Omega[i])
             V.append(X_i)
             A.remove(X_i)
-        #     print("score_sum为:",score_sum)
         return N, score_sum
 
     def PrivBayes_PDconstruct_Bayes(df, k, first_node, matrix, epsilon, sensitivity):
-        N = []  # 存放网络结构
-        V = []  # 已在网络中的Attribute
+        N = []
+        V = []
         A = df.columns.values.tolist()
-        score_sum = 0.0  # 求ap对的分数之和，作为评价指标
+        score_sum = 0.0
         df_len = len(A)
-        #     X_1 = A[np.random.randint(0,len(df.columns))] # 随机选择首节点
         X_1 = first_node
         N.append((X_1, (np.nan)))
         V.append(X_1)
         A.remove(X_1)
-        for i in range(1, df_len):  # [1,df_len-1]
+        for i in range(1, df_len):
             Omega = []
             scores = []
             V_k_subset = get_subset(V, k)
@@ -193,10 +185,10 @@ class PrivBayes():
                     scores.append(score_X_pai)  # 1
                     Omega.append((X, pai))
             i = exponential(options=np.arange(0, len(Omega), 1), scores=scores, epsilon=epsilon / (df_len - 1),
-                            sensitivity=sensitivity)  # 选出下标
+                            sensitivity=sensitivity)
             score_sum += scores[i]
-            X_i = Omega[i][0]  # 从A选出的节点
-            N.append(Omega[i])  # 给网络加入依赖
+            X_i = Omega[i][0]
+            N.append(Omega[i])
             V.append(X_i)
             A.remove(X_i)
         return N, score_sum
@@ -208,7 +200,6 @@ class PrivBayes():
         sensitivity = 2 / n
         epsilon_i = epsilon2 / (d - k)
         for i in range(k, d)[::-1]:
-            # print(epsilon_i)
             variable_names_i = []
             variable_value_i = []
             Pr_AP = np.array([])
@@ -218,15 +209,13 @@ class PrivBayes():
                 variable_names_i.append(N[i][1][j])
                 variable_value_i.append(DF[N[i][1][j]].unique().tolist())
             df = DF[variable_names_i]
-            # 求联合概率分布
-            joint_distri = get_joint_distribution(variable_value_i)  # 所有组合
-            condi_variable = get_joint_distribution(variable_value_i[1:])  # 所有条件组合
+            joint_distri = get_joint_distribution(variable_value_i)
+            condi_variable = get_joint_distribution(variable_value_i[1:])
             for m in range(len(joint_distri)):
                 Pr_AP = np.append(Pr_AP, df[df == joint_distri[m]].dropna().shape[0] / n)
             Pr_AP += np.random.laplace(loc=0, scale=sensitivity / epsilon_i)
-            Pr_AP[Pr_AP < 0] = 0  # 负值赋0
-            Pr_AP = Pr_AP / np.linalg.norm(Pr_AP, ord=1)  # 归一化
-            # 推导条件概率分布
+            Pr_AP[Pr_AP < 0] = 0
+            Pr_AP = Pr_AP / np.linalg.norm(Pr_AP, ord=1)
             for o in range(len(condi_variable)):
                 pr_cpd = np.array([])
                 for p in range(len(joint_distri)):
@@ -272,28 +261,19 @@ class PrivBayes():
         n = DF.shape[0]
         sensitivity = 2 / n
         q = Q
-        start_index = k  # 假设从索引位置 k开始对后面的数据排序
-        # 获取排序前的前部分（不排序）
-        # pre_sorted = score_all[:start_index]
-        # print(pre_sorted)
-        # 获取后部分（从start_index开始）
+        start_index = k
         post_sorted = score_all[start_index:]
-        # 将集合从大到小排序
         sorted_data = sorted(post_sorted, reverse=True)
-        # 计算分组的大小
         z = len(score_all)
-        third = math.ceil((z-k) / 3) # 每一类的大致数量
-        # 定义分组的标签
-        labels = ['A', 'B', 'C']
-        # 将数据按从大到小分为三类
+        third = math.ceil((z-k) / 3)
         classified_data = {}
         for i, value in enumerate(sorted_data):
             if i < third:
-                label = 'A'  # 最大的一类标记为A
+                label = 'A'
             elif i < 2 * third:
-                label = 'B'  # 中间的一类标记为B
+                label = 'B'
             else:
-                label = 'C'  # 最小的一类标记为C
+                label = 'C'
             classified_data[value] = label
         label_counts = Counter(classified_data.values())
         for i in range(k, d)[::-1]:
@@ -317,17 +297,14 @@ class PrivBayes():
                 variable_names_i.append(N[i][1][j])
                 variable_value_i.append(DF[N[i][1][j]].unique().tolist())
             df = DF[variable_names_i]
-            # 求联合概率分布
-            joint_distri = get_joint_distribution(variable_value_i)  # 所有组合
-            condi_variable = get_joint_distribution(variable_value_i[1:])  # 所有条件组合
+            joint_distri = get_joint_distribution(variable_value_i)
+            condi_variable = get_joint_distribution(variable_value_i[1:])
             for m in range(len(joint_distri)):
                 Pr_AP = np.append(Pr_AP, df[df == joint_distri[m]].dropna().shape[0] / n)
             Pr_AP += np.random.laplace(loc=0, scale=sensitivity / epsilon_i)
-            Pr_AP[Pr_AP < 0] = 0  # 负值赋0
+            Pr_AP[Pr_AP < 0] = 0
 
             Pr_AP = Pr_AP / np.linalg.norm(Pr_AP, ord=1)
-
-            # 推导条件概率分布
             for o in range(len(condi_variable)):
                 pr_cpd = np.array([])
                 for p in range(len(joint_distri)):
@@ -387,10 +364,10 @@ class PrivBayes():
 
 
 def PrivBayes_PDconstruct_Bayes(df, k, first_node, matrix, epsilon, sensitivity):
-    N = []  # 存放网络结构
-    V = []  # 已在网络中的Attribute
+    N = []
+    V = []
     A = df.columns.values.tolist()
-    score_sum = 0.0  # 求ap对的分数之和，作为评价指标
+    score_sum = 0.0
     df_len = len(A)
     X_1 = first_node
     N.append((X_1, (np.nan)))
@@ -411,21 +388,21 @@ def PrivBayes_PDconstruct_Bayes(df, k, first_node, matrix, epsilon, sensitivity)
             scores.append(score_X_pai)  # 1
             Omega.append((X, pai))
         i = exponential(options=np.arange(0, len(Omega), 1), scores=scores, epsilon=epsilon / (df_len - 1),
-                        sensitivity=sensitivity)  # 选出下标
+                        sensitivity=sensitivity)
         score_sum += scores[i]
-        X_i = Omega[i][0]  # 从A选出的节点
-        N.append(Omega[i])  # 给网络加入依赖
+        X_i = Omega[i][0]
+        N.append(Omega[i])
         V.append(X_i)
         A.remove(X_i)
     return N, score_sum
 
 def PrivBayes_PDconstruct_Bayes_new1(df, k, first_node, matrix, epsilon, sensitivity):
-    N = []  # 存放网络结构
-    V = []  # 已在网络中的Attribute
+    N = []
+    V = []
     score_all = []
     score_all.append(0)
     A = df.columns.values.tolist()
-    score_sum = 0.0  # 求ap对的分数之和，作为评价指标
+    score_sum = 0.0
     df_len = len(A)
     X_1 = first_node
     N.append((X_1, (np.nan)))
@@ -449,28 +426,25 @@ def PrivBayes_PDconstruct_Bayes_new1(df, k, first_node, matrix, epsilon, sensiti
             scores.append(score_X_pai)  # 1
             Omega.append((X, pai))
 
-        # 确保候选集有足够的元素再进行筛选
         if len(Omega) > 2:
-            # 对所有候选AP对按得分排序
+
             sorted_scores_with_indices = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
             sorted_indices = [idx for idx, score in sorted_scores_with_indices]
 
-            # 筛选掉最差的 1/3 的 AP 对
-            threshold_index = int(len(sorted_indices) * 2 / 3)  # 选择前 2/3 的索引
-            selected_indices = sorted_indices[:threshold_index]  # 筛选前 2/3 排名内的 AP 对
+
+            threshold_index = int(len(sorted_indices) * 2 / 3)
+            selected_indices = sorted_indices[:threshold_index]
             selected_Omega = [Omega[idx] for idx in selected_indices]
             selected_scores = [scores[idx] for idx in selected_indices]
         else:
-            # 如果候选集合数量<=2，则跳过筛选
             selected_Omega = Omega
             selected_scores = scores
-        # 使用指数机制选择 2/3 排名内的 AP 对
         i = exponential(options=np.arange(0, len(selected_Omega)), scores=selected_scores,
-                        epsilon=epsilon / (df_len - 1), sensitivity=sensitivity)  # 选出下标
+                        epsilon=epsilon / (df_len - 1), sensitivity=sensitivity)
         score_all.append(selected_scores[i])
         score_sum += selected_scores[i]
-        X_i = selected_Omega[i][0]  # 从A选出的节点
-        N.append(selected_Omega[i])  # 给网络加入依赖
+        X_i = selected_Omega[i][0]
+        N.append(selected_Omega[i])
         V.append(X_i)
         A.remove(X_i)
 
@@ -482,14 +456,12 @@ def get_svm_ac(df_new, df_test, target_name):
     fetures = df.drop([target_name], axis=1, inplace=False)
     target = df[[target_name]]
     x_encode = OneHotEncoder(sparse=True).fit_transform(fetures).toarray()
-    #     x_encode = fetures.apply(LabelEncoder().fit_transform)
     y_encode = target.apply(LabelEncoder().fit_transform)
-    # y_encode = OneHotEncoder(sparse=True).fit_transform(target).toarray()
     x_train = x_encode[0:num_new]
     y_train = y_encode[0:num_new]
     x_test = x_encode[num_new:]
     y_test = y_encode[num_new:]
-    classifier = svm.SVC(kernel='rbf', decision_function_shape='ovr')  # decision_function_shape='ovr'
+    classifier = svm.SVC(kernel='rbf', decision_function_shape='ovr')
     classifier.fit(x_train, y_train)
     y_pridict = classifier.predict(x_test)
     ac = metrics.accuracy_score(y_test, y_pridict)
@@ -565,10 +537,8 @@ for i in range(0,1):
     MIM = get_mim(df)
     d = df.shape[1]
     n = df.shape[0]
-    if i == 0:
-        sensitivity = get_MI_sensitivity(n, binary=True)
-    else:
-        sensitivity = get_MI_sensitivity(n, binary=False)
+    # Set binary to true when the dataset is NLTCS, and false for all other cases.
+    sensitivity = get_MI_sensitivity(n, binary=True)
     target = pridict_variable[datasets_name[i]][0]
     for epsilon in epsilon_list:
         epsilon1 = 0.3 * epsilon
