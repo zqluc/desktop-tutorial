@@ -31,7 +31,7 @@ print(ax)
 k = 2
 alpha = 2
 result = pd.read_csv(
-    r'D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning\distance-{}-k={}.csv'.format(
+    r'D:\Users\admin\Desktop\SA-PrivBayes\distance\distance-{}-k={}.csv'.format(
         datasets_name[0], k))
 score_SA_PrivBayes_list = result['SA-PrivBayes']
 score_EL_PrivBayes_list = result['ELPrivBayes']
@@ -50,5 +50,5 @@ font2 = {'family': 'Times New Roman',
 ax.set_title("({0}) {1}, Q$_2$".format(abcd[0], datasets_name[0]), y=-0.22, fontsize=20)
 ax.set_ylabel('Average variation distance', fontsize=20)
 ax.legend(bbox_to_anchor=(1, 1), loc='upper right', fontsize=10, framealpha=0.5)
-plt.savefig(r"D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning\distance-{}.svg".format(datasets_name[0]),
+plt.savefig(r"D:\Users\admin\Desktop\SA-PrivBayes\distance\distance-{}.svg".format(datasets_name[0]),
             format='svg', dpi=300, bbox_inches='tight', pad_inches=0.07)

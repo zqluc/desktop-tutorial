@@ -19,9 +19,9 @@ from sklearn import svm
 from collections import Counter
 import math
 
-# path_adult = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\processed_dataset_Adult_41292.csv"
-path_NLTSC = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\NLTSC_20000 .csv"
-# path_BR2000 = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\BR2000.csv"
+# path_adult = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\processed_dataset_Adult_41292.csv"
+path_NLTSC = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\NLTSC_20000 .csv"
+# path_BR2000 = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\BR2000.csv"
 
 # Data_adult = pd.read_csv(path_adult)  # " D:/a/b/c/abc.csv"
 Data_NLTCS = pd.read_csv(path_NLTSC)
@@ -643,4 +643,4 @@ for k in range(2,4):
         result['Our3']=score_our3
         result['Our2']=score_our2
         result['Our4'] = score_our4
-        result.to_csv(r'D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning\结构学习中间的对比_{}_Isum_{}.csv'.format(datasets[i],k))
+        result.to_csv(r'D:\Users\admin\Desktop\SA-PrivBayes\mutual\mutual_{}_Isum_{}.csv'.format(datasets[i],k))

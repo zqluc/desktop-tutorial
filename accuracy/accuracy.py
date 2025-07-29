@@ -19,9 +19,9 @@ from sklearn import svm
 from collections import Counter
 import math
 
-path_adult = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\processed_dataset_Adult_41292.csv"
-# path_NLTSC = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\NLTSC_20000 .csv"
-# path_BR2000 = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\Processed_used datasets\BR2000.csv"
+path_adult = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\processed_dataset_Adult_41292.csv"
+# path_NLTSC = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\NLTSC_20000 .csv"
+# path_BR2000 = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\Processed_used datasets\BR2000.csv"
 Data_adult = pd.read_csv(path_adult)
 # Data_NLTCS = pd.read_csv(path_NLTSC)
 # Data_BR2000 = pd.read_table(path_BR2000, sep=',', index_col=0)
@@ -216,7 +216,7 @@ class PrivBayes():
             Pr_AP += np.random.laplace(loc=0, scale=sensitivity / epsilon_i)
             Pr_AP[Pr_AP < 0] = 0  # Replace negative values with 0
             Pr_AP = Pr_AP / np.linalg.norm(Pr_AP, ord=1)
-            # 推导条件概率分布
+            # Deriving Conditional Probability Distribution
             for o in range(len(condi_variable)):
                 pr_cpd = np.array([])
                 for p in range(len(joint_distri)):
@@ -587,5 +587,5 @@ for i in range(0, 1):
         experiment_table['SAPrivBayes,q=1.1'] = score_SAPrivBayes_1_list
         experiment_table['SAPrivBayes,q=1.0'] = score_SAPrivBayes_0_list
         experiment_table.to_csv(
-            r'D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning-Isum\{}-AVD-SVM-{}.csv'.format(
+            r'D:\Users\admin\Desktop\SA-PrivBayes\accucracy\{}-AVD-SVM-{}.csv'.format(
                 datasets_name[i],datasets_name[i]))

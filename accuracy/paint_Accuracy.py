@@ -34,7 +34,7 @@ k = 2
 alpha = 2
 for i in range(0, 1):
     result = pd.read_csv(
-        r'D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning\{}-AVD-SVM-{}.csv'.format(
+        r'D:\Users\admin\Desktop\SA-PrivBayes\accuracy\{}-AVD-SVM-{}.csv'.format(
             datasets_name[0],datasets_name[0]))
     score_PrivBayes_list = result['PrivBayes']
     score_ELPrivBayes_list = result['ELPrivBayes']
@@ -59,5 +59,5 @@ font2 = {'family': 'Times New Roman',
 ax.set_title("({0}) {1}".format(abcd[0], datasets_name[0]), y=-0.22, fontsize=20)
 ax.set_ylabel('Accuracy', fontsize=20)
 ax.legend(bbox_to_anchor=(1, 0), loc='lower right', fontsize=10, framealpha=0.5)
-plt.savefig(r"D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning\accuracy-{}.svg".format(
+plt.savefig(r"D:\Users\admin\Desktop\SA-PrivBayes\accuracy\accuracy-{}.svg".format(
             datasets_name[0]),format='svg', dpi=300, bbox_inches='tight', pad_inches=0.07)

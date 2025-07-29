@@ -19,9 +19,9 @@ from sklearn import svm
 from collections import Counter
 import math
 
-path_adult = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\processed_dataset_Adult_41292.csv"
-# path_NLTSC = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\NLTSC_20000 .csv"
-# path_BR2000 = r"D:\Users\admin\Desktop\elpriv-bayes-master\Datasets\Processed_used datasets\Processed_used datasets\BR2000.csv"
+path_adult = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\processed_dataset_Adult_41292.csv"
+# path_NLTSC = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\NLTSC_20000 .csv"
+# path_BR2000 = r"D:\Users\admin\Desktop\SA-PrivBayes\Datasets\Processed_used datasets\Processed_used datasets\BR2000.csv"
 Data_adult = pd.read_csv(path_adult)
 # Data_NLTCS = pd.read_csv(path_NLTSC)
 # Data_BR2000 = pd.read_table(path_BR2000, sep=',', index_col=0)
@@ -599,6 +599,6 @@ for i in range(0,1):
     expriment_table['ELPrivBayes'] = score_EL_PrivBayes_list
     expriment_table['PrivBayes'] = score_PrivBayes_list
     expriment_table.to_csv(
-        r'D:\Users\admin\Desktop\elpriv-bayes-master\Non-Privacy-Sturctlearning\distance-{}-k={}.csv'.format(
+        r'D:\Users\admin\Desktop\SA-PrivBayes\distance\distance-{}-k={}.csv'.format(
             datasets_name[i], k, target))
 
