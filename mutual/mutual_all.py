@@ -153,7 +153,7 @@ class PrivBayes():
                     score_X_pai = 0.0
                     for atr in pai:
                         score_X_pai += matrix[X][matrix.index == atr].values[0]
-                    scores.append(score_X_pai)  # 1
+                    scores.append(score_X_pai)
                     Omega.append((X, pai))
             i = scores.index(np.max(scores))
             score_sum += np.max(scores)
@@ -301,7 +301,7 @@ class PrivBayes():
             for m in range(len(joint_distri)):
                 Pr_AP = np.append(Pr_AP, df[df == joint_distri[m]].dropna().shape[0] / n)
             Pr_AP += np.random.laplace(loc=0, scale=sensitivity / epsilon_i)
-            Pr_AP[Pr_AP < 0] = 0  #
+            Pr_AP[Pr_AP < 0] = 0
 
             Pr_AP = Pr_AP / np.linalg.norm(Pr_AP, ord=1)
             for o in range(len(condi_variable)):
@@ -385,7 +385,7 @@ def PrivBayes_PDconstruct_Bayes(df, k, first_node, matrix, epsilon, sensitivity)
             score_X_pai = 0.0
             for atr in pai:
                 score_X_pai += matrix[X][matrix.index == atr].values[0]
-            scores.append(score_X_pai)  # 1
+            scores.append(score_X_pai)
             Omega.append((X, pai))
         i = exponential(options=np.arange(0, len(Omega), 1), scores=scores, epsilon=epsilon / (df_len - 1),
                         sensitivity=sensitivity)
@@ -423,7 +423,7 @@ def PrivBayes_PDconstruct_Bayes_new1(df, k, first_node, matrix, epsilon, sensiti
             score_X_pai = 0.0
             for atr in pai:
                 score_X_pai += matrix[X][matrix.index == atr].values[0]
-            scores.append(score_X_pai)  # 1
+            scores.append(score_X_pai)
             Omega.append((X, pai))
 
 
@@ -478,7 +478,7 @@ def PrivBayes_PDconstruct_Bayes_new2(df, k, first_node, matrix, epsilon, sensiti
             score_X_pai = 0.0
             for atr in pai:
                 score_X_pai += matrix[X][matrix.index == atr].values[0]
-            scores.append(score_X_pai)  # 1
+            scores.append(score_X_pai)
             Omega.append((X, pai))
         if len(Omega) > 2:
             sorted_scores_with_indices = sorted(enumerate(scores), key=lambda x: x[1], reverse=True)
@@ -492,7 +492,7 @@ def PrivBayes_PDconstruct_Bayes_new2(df, k, first_node, matrix, epsilon, sensiti
             selected_Omega = Omega
             selected_scores = scores
         i = exponential(options=np.arange(0, len(selected_Omega)), scores=selected_scores,
-                        epsilon=epsilon / (df_len - 1), sensitivity=sensitivity)  # 选出下标
+                        epsilon=epsilon / (df_len - 1), sensitivity=sensitivity)
 
         score_all.append(selected_scores[i])
         score_sum += selected_scores[i]
@@ -530,7 +530,7 @@ def PrivBayes_PDconstruct_Bayes_new3(df, k, first_node, matrix, epsilon, sensiti
             score_X_pai = 0.0
             for atr in pai:
                 score_X_pai += matrix[X][matrix.index == atr].values[0]
-            scores.append(score_X_pai)  # 1
+            scores.append(score_X_pai)
             Omega.append((X, pai))
 
         if len(Omega) > 3:

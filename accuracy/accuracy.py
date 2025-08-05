@@ -391,7 +391,7 @@ def PrivBayes_PDconstruct_Bayes(df, k, first_node, matrix, epsilon, sensitivity)
             score_X_pai = 0.0
             for atr in pai:
                 score_X_pai += matrix[X][matrix.index == atr].values[0]
-            scores.append(score_X_pai)  # 1
+            scores.append(score_X_pai)
             Omega.append((X, pai))
         i = exponential(options=np.arange(0, len(Omega), 1), scores=scores, epsilon=epsilon / (df_len - 1),
                         sensitivity=sensitivity)
@@ -430,7 +430,7 @@ def PrivBayes_PDconstruct_Bayes_new1(df, k, first_node, matrix, epsilon, sensiti
             score_X_pai = 0.0
             for atr in pai:
                 score_X_pai += matrix[X][matrix.index == atr].values[0]
-            scores.append(score_X_pai)  # 1
+            scores.append(score_X_pai)
             Omega.append((X, pai))
 
         # Ensure the candidate set has sufficient elements before filtering
