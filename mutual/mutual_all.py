@@ -1,4 +1,3 @@
-# 依赖
 import pandas as pd
 import numpy as np
 import sklearn.metrics as mtr
@@ -182,7 +181,7 @@ class PrivBayes():
                     score_X_pai = 0.0
                     for atr in pai:
                         score_X_pai += matrix[X][matrix.index == atr].values[0]
-                    scores.append(score_X_pai)  # 1
+                    scores.append(score_X_pai)
                     Omega.append((X, pai))
             i = exponential(options=np.arange(0, len(Omega), 1), scores=scores, epsilon=epsilon / (df_len - 1),
                             sensitivity=sensitivity)
